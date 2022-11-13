@@ -1,0 +1,5 @@
+#yml书写时直接敲port就会提示出前面的server来，context-path也一样，否则格式上不对会有影响，8081前面有一个空格
+server:
+  port: 8085
+  servlet:
+    context-path: /tulingxueyuan

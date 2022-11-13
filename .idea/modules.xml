@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/01_springboot_initializr/01_springboot_initializr.iml" filepath="$PROJECT_DIR$/01_springboot_initializr/01_springboot_initializr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/02_configuration_file/02_configuration_file.iml" filepath="$PROJECT_DIR$/02_configuration_file/02_configuration_file.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04_configuration_inject/04_configuration_inject.iml" filepath="$PROJECT_DIR$/04_configuration_inject/04_configuration_inject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/springboot_parent.iml" filepath="$PROJECT_DIR$/springboot_parent.iml" />
+    </modules>
+  </component>
+</project>
