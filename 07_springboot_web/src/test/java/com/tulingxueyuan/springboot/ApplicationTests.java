@@ -1,5 +1,6 @@
 package com.tulingxueyuan.springboot;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tulingxueyuan.springboot.entity.User;
 import com.tulingxueyuan.springboot.mapper.UserMapper;
 import com.tulingxueyuan.springboot.service.UserService;
@@ -77,5 +78,18 @@ class ApplicationTests {
     void listByIds(){
         List<Integer>ids= Arrays.asList(41,42);
         userService.listByIds(ids);
+    }
+
+    /**
+     * 分页
+     * 功能实现必须依赖启动类里面的MybatisPlusInterceptor的插件内容，否则sql根本不会有limit的内容
+     */
+    @Test
+    void Page(){
+        Page<User> userPage = new Page<>(1,2);
+        Page<User> page = userService.page(userPage);
+        System.out.println(page);
+        System.out.println("页数："+page.getPages());
+        System.out.println("总数："+page.getTotal());
     }
 }
