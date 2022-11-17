@@ -11,3 +11,6 @@ logging:
   level:
     com:
       tulingxueyuan: debug
+mybatis-plus:
+#  mp默认的mapper.xml路径是 classpath*:/mapper/**/*.xml,如果不是按下面的方式进行修改
+  mapper-locations: classpath:/mapperzz/*.xml

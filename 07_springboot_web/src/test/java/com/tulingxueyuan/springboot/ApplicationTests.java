@@ -1,5 +1,6 @@
 package com.tulingxueyuan.springboot;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tulingxueyuan.springboot.entity.User;
 import com.tulingxueyuan.springboot.mapper.UserMapper;
@@ -23,6 +24,7 @@ class ApplicationTests {
     private UserMapper userMapper;
     @Autowired
     UserServiceImpl userService;
+
 
     @Test
     void contextLoads() {
@@ -88,6 +90,18 @@ class ApplicationTests {
     void Page(){
         Page<User> userPage = new Page<>(1,2);
         Page<User> page = userService.page(userPage);
+        System.out.println(page);
+        System.out.println("页数："+page.getPages());
+        System.out.println("总数："+page.getTotal());
+    }
+
+    /**
+     * 基于xml分页功能
+     */
+    @Test
+    void getPagebyXml(){
+        Page<User> userPage = new Page<>(1,2);
+        IPage<User> page = userMapper.getByGender(userPage, "男");
         System.out.println(page);
         System.out.println("页数："+page.getPages());
         System.out.println("总数："+page.getTotal());
