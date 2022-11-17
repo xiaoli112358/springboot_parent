@@ -17,6 +17,9 @@ public class User {
     private String sex;
     private String address;
 
+    public User() {
+    }
+
     public User(Integer id, String user_name, String birthday, String sex, String address) {
         this.id = id;
         this.user_name = user_name;

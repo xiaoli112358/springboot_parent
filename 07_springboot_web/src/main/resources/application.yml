@@ -10,4 +10,4 @@ spring:
 logging:
   level:
     com:
-      tulingxueyuan: trace
+      tulingxueyuan: debug

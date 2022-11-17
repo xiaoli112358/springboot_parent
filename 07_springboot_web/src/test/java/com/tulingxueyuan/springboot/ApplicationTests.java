@@ -2,23 +2,32 @@ package com.tulingxueyuan.springboot;
 
 import com.tulingxueyuan.springboot.entity.User;
 import com.tulingxueyuan.springboot.mapper.UserMapper;
+import com.tulingxueyuan.springboot.service.UserService;
+import com.tulingxueyuan.springboot.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+
+import static com.alibaba.druid.util.FnvHash.Constants.T;
+import static com.fasterxml.jackson.databind.type.LogicalType.Collection;
 
 @SpringBootTest
 class ApplicationTests {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    UserServiceImpl userService;
 
     @Test
     void contextLoads() {
         User user = userMapper.selectById(41);
         System.out.println(user);
     }
-
     @Test
     void insert(){
         User user = new User(null,"小利",new Date().toString(),"男","鄂尔多斯");
@@ -36,5 +45,37 @@ class ApplicationTests {
         userMapper.updateById(user);
 
         System.out.println(user);
+    }
+
+    @Test
+    void query(){
+        User user = userService.getById(41);
+        System.out.println(user);
+    }
+    @Test
+    /**
+     * 在传入主键ID的时候，会自动按主键查询，有就更新，没有则插入
+     */
+    void saveOrUpdate(){
+        User user = new User(1611763719,"小利",new Date().toString(),"男","鄂尔多斯");
+        userService.saveOrUpdate(user);
+        System.out.println(user);
+    }
+
+    /**
+     * 批量删除
+     */
+    @Test
+    void remove(){
+        List<Integer>ids= Arrays.asList(1611763717,1611763719);
+        userService.removeByIds(ids);
+    }
+    /**
+     * 批量查询
+     */
+    @Test
+    void listByIds(){
+        List<Integer>ids= Arrays.asList(41,42);
+        userService.listByIds(ids);
     }
 }
