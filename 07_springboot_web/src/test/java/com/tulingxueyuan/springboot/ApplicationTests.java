@@ -1,5 +1,7 @@
 package com.tulingxueyuan.springboot;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.tulingxueyuan.springboot.entity.User;
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.swing.text.html.parser.Entity;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -105,5 +108,36 @@ class ApplicationTests {
         System.out.println(page);
         System.out.println("页数："+page.getPages());
         System.out.println("总数："+page.getTotal());
+    }
+
+    /**
+     * 构建复杂的查询
+     */
+    @Test
+     void contextLoader(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select("username","sex")//只查询这两个字段
+                .eq("id","41"); //条件
+        userService.list(queryWrapper);
+    }
+    @Test
+    void between(){
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+//                .isNull("username")
+                .inSql("address","select '北京' from dual")
+                .between("id",43,48)
+                .groupBy("username","sex")
+        ;
+        System.out.println(userService.list(queryWrapper));
+    }
+    @Test
+    void updateWrapper(){
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
+        userUpdateWrapper
+//                .set("username","胡二哈")
+                .setSql("username = '胡二哈' ")
+                .eq("id",41);
+        userService.update(userUpdateWrapper);
     }
 }
