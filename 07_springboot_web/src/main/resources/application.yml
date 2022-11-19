@@ -18,3 +18,8 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: auto
+#      全局配置逻辑删除
+      logic-delete-field: enabled #逻辑删除使用的字段
+      logic-delete-value: 0 # 已删除数据
+      logic-not-delete-value: 1 #有效数据
+

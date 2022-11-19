@@ -1,9 +1,6 @@
 package com.tulingxueyuan.springboot.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 
 //mybatisPlus会默认将实体类名当作表名，如果跟数据库不一致使用该注解
 @TableName("sys_user")
@@ -17,6 +14,11 @@ public class User {
     private String sex;
     private String address;
 
+//    @TableLogic//实现逻辑删除的注解
+    //想实现指定的 原来是多少，逻辑删除以后是多少的话添加参数
+//    @TableLogic(value = "1",delval = "0")
+    private Integer enabled;
+
     public User() {
     }
 
@@ -26,6 +28,22 @@ public class User {
         this.birthday = birthday;
         this.sex = sex;
         this.address = address;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
+    }
+
+    public Integer getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Integer enabled) {
+        this.enabled = enabled;
     }
 
     public String getBirthday() {
@@ -50,14 +68,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return user_name;
-    }
-
-    public void setUsername(String username) {
-        this.user_name = username;
     }
 
     public String getAddress() {

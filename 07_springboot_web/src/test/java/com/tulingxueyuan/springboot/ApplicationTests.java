@@ -117,7 +117,8 @@ class ApplicationTests {
      void contextLoader(){
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.select("username","sex")//只查询这两个字段
-                .eq("id","41"); //条件
+                .isNull("sex")//条件
+                .eq("id","43"); //条件
         userService.list(queryWrapper);
     }
     @Test
@@ -139,5 +140,12 @@ class ApplicationTests {
                 .setSql("username = '胡二哈' ")
                 .eq("id",41);
         userService.update(userUpdateWrapper);
+    }
+
+    @Test
+    void delLogic(){
+        userService.removeById(41);
+        // 执行的sql这样的：
+        //UPDATE sys_user SET enabled=1 WHERE id=48 AND enabled=0
     }
 }
