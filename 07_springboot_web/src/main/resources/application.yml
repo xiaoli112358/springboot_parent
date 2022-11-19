@@ -14,3 +14,7 @@ logging:
 mybatis-plus:
 #  mp默认的mapper.xml路径是 classpath*:/mapper/**/*.xml,如果不是按下面的方式进行修改
   mapper-locations: classpath:/mapperzz/*.xml
+#  全局的id生成策略，这样所有的实体类中不需要再写@TableId(value = "id",type = IdType.AUTO)
+  global-config:
+    db-config:
+      id-type: auto

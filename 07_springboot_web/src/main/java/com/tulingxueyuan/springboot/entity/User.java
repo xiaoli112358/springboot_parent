@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 //mybatisPlus会默认将实体类名当作表名，如果跟数据库不一致使用该注解
 @TableName("sys_user")
 public class User {
-    @TableId(value = "id",type = IdType.AUTO) //数据库有主键自增，该注解用来让它自增，否则mybatisPlus会自己生成一个id值
+//    @TableId(value = "id",type = IdType.AUTO) //数据库有主键自增，该注解用来让它自增，否则mybatisPlus会自己生成一个id值
     private Integer id;
 //    当实体类字段名和数据库字段名不一致时使用
     @TableField("username")
