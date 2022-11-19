@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tulingxueyuan.springboot</groupId>
-    <artifactId>07_springboot_web</artifactId>
+    <artifactId>springboot_parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>07_springboot_web</name>
     <description>Spring Boot与web开发</description>
@@ -40,6 +40,12 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
+        </dependency>
+        <!--日志分析-->
+        <dependency>
+            <groupId>p6spy</groupId>
+            <artifactId>p6spy</artifactId>
+            <version>3.9.1</version>
         </dependency>
     </dependencies>
 
