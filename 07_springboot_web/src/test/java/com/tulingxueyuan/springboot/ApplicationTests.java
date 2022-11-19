@@ -47,7 +47,7 @@ class ApplicationTests {
     }
     @Test
     void update(){
-        User user = new User(1611763717, "大力", new Date().toString(), "女", "东胜区");
+        User user = new User(1611763725, "大力", new Date().toString(), "女", "东胜区");
         userMapper.updateById(user);
 
         System.out.println(user);
@@ -142,10 +142,35 @@ class ApplicationTests {
         userService.update(userUpdateWrapper);
     }
 
+    /**
+     * 逻辑删除
+     */
     @Test
     void delLogic(){
-        userService.removeById(41);
+//        userService.removeById(41);
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.lambda()
+                .eq(User::getUser_name,"小利");
+        userService.list(userQueryWrapper);
         // 执行的sql这样的：
         //UPDATE sys_user SET enabled=1 WHERE id=48 AND enabled=0
+    }
+
+    /**
+     * 使用lambda的方式进行CRUD操作
+     * 避免硬编码
+     */
+    @Test
+    void lambda(){
+//        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+//        userQueryWrapper.lambda()
+//                .eq(User::getUser_name,"小利");
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
+        userUpdateWrapper.lambda()
+                .set(User::getUser_name,"胡二哈")
+//                .setSql("username = '胡二哈' ")
+                .eq(User::getId,41);
+//        userService.list(userQueryWrapper);
+        userService.update(userUpdateWrapper);
     }
 }
