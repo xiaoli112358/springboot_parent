@@ -29,6 +29,17 @@ public class User {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Date modifyTime;
 
+    @Version
+    private Integer version;
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
+
     public Date getCreateTime() {
         return createTime;
     }

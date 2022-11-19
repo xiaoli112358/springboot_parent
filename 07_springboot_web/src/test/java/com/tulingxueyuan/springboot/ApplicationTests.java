@@ -34,19 +34,22 @@ class ApplicationTests {
         User user = userMapper.selectById(41);
         System.out.println(user);
     }
+
     @Test
-    void insert(){
-        User user = new User(null,"小利",new Date().toString(),"男","鄂尔多斯");
+    void insert() {
+        User user = new User(null, "小利", new Date().toString(), "男", "鄂尔多斯");
         userMapper.insert(user);
 //        插入完成后可以立即得到插入的值
         System.out.println(user);
     }
+
     @Test
-    void del(){
+    void del() {
         userMapper.deleteById(-1634717695);
     }
+
     @Test
-    void update(){
+    void update() {
         User user = new User(1611763725, "大力", new Date().toString(), "女", "东胜区");
         userMapper.updateById(user);
 
@@ -54,16 +57,17 @@ class ApplicationTests {
     }
 
     @Test
-    void query(){
+    void query() {
         User user = userService.getById(41);
         System.out.println(user);
     }
+
     @Test
     /**
      * 在传入主键ID的时候，会自动按主键查询，有就更新，没有则插入
      */
-    void saveOrUpdate(){
-        User user = new User(1611763719,"小利",new Date().toString(),"男","鄂尔多斯");
+    void saveOrUpdate() {
+        User user = new User(1611763719, "小利", new Date().toString(), "男", "鄂尔多斯");
         userService.saveOrUpdate(user);
         System.out.println(user);
     }
@@ -72,16 +76,17 @@ class ApplicationTests {
      * 批量删除
      */
     @Test
-    void remove(){
-        List<Integer>ids= Arrays.asList(1611763717,1611763719);
+    void remove() {
+        List<Integer> ids = Arrays.asList(1611763717, 1611763719);
         userService.removeByIds(ids);
     }
+
     /**
      * 批量查询
      */
     @Test
-    void listByIds(){
-        List<Integer>ids= Arrays.asList(41,42);
+    void listByIds() {
+        List<Integer> ids = Arrays.asList(41, 42);
         userService.listByIds(ids);
     }
 
@@ -90,55 +95,57 @@ class ApplicationTests {
      * 功能实现必须依赖启动类里面的MybatisPlusInterceptor的插件内容，否则sql根本不会有limit的内容
      */
     @Test
-    void Page(){
-        Page<User> userPage = new Page<>(1,2);
+    void Page() {
+        Page<User> userPage = new Page<>(1, 2);
         Page<User> page = userService.page(userPage);
         System.out.println(page);
-        System.out.println("页数："+page.getPages());
-        System.out.println("总数："+page.getTotal());
+        System.out.println("页数：" + page.getPages());
+        System.out.println("总数：" + page.getTotal());
     }
 
     /**
      * 基于xml分页功能
      */
     @Test
-    void getPagebyXml(){
-        Page<User> userPage = new Page<>(1,2);
+    void getPagebyXml() {
+        Page<User> userPage = new Page<>(1, 2);
         IPage<User> page = userMapper.getByGender(userPage, "男");
         System.out.println(page);
-        System.out.println("页数："+page.getPages());
-        System.out.println("总数："+page.getTotal());
+        System.out.println("页数：" + page.getPages());
+        System.out.println("总数：" + page.getTotal());
     }
 
     /**
      * 构建复杂的查询
      */
     @Test
-     void contextLoader(){
+    void contextLoader() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
-        queryWrapper.select("username","sex")//只查询这两个字段
+        queryWrapper.select("username", "sex")//只查询这两个字段
                 .isNull("sex")//条件
-                .eq("id","43"); //条件
+                .eq("id", "43"); //条件
         userService.list(queryWrapper);
     }
+
     @Test
-    void between(){
+    void between() {
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper
 //                .isNull("username")
-                .inSql("address","select '北京' from dual")
-                .between("id",43,48)
-                .groupBy("username","sex")
+                .inSql("address", "select '北京' from dual")
+                .between("id", 43, 48)
+                .groupBy("username", "sex")
         ;
         System.out.println(userService.list(queryWrapper));
     }
+
     @Test
-    void updateWrapper(){
+    void updateWrapper() {
         UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
         userUpdateWrapper
 //                .set("username","胡二哈")
                 .setSql("username = '胡二哈' ")
-                .eq("id",41);
+                .eq("id", 41);
         userService.update(userUpdateWrapper);
     }
 
@@ -146,11 +153,11 @@ class ApplicationTests {
      * 逻辑删除
      */
     @Test
-    void delLogic(){
+    void delLogic() {
 //        userService.removeById(41);
         QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
         userQueryWrapper.lambda()
-                .eq(User::getUser_name,"小利");
+                .eq(User::getUser_name, "小利");
         userService.list(userQueryWrapper);
         // 执行的sql这样的：
         //UPDATE sys_user SET enabled=1 WHERE id=48 AND enabled=0
@@ -161,16 +168,38 @@ class ApplicationTests {
      * 避免硬编码
      */
     @Test
-    void lambda(){
+    void lambda() {
 //        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
 //        userQueryWrapper.lambda()
 //                .eq(User::getUser_name,"小利");
         UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
         userUpdateWrapper.lambda()
-                .set(User::getUser_name,"胡二哈")
+                .set(User::getUser_name, "胡二哈")
 //                .setSql("username = '胡二哈' ")
-                .eq(User::getId,41);
+                .eq(User::getId, 41);
 //        userService.list(userQueryWrapper);
         userService.update(userUpdateWrapper);
+    }
+
+    @Test
+    void CASTest() {
+        User user1 = userService.getById(48);
+        User user2 = userService.getById(48);
+        user1.setSex("1");
+        user2.setSex("2");
+
+//        System.out.println(userService.updateById(user1));
+//        System.out.println(userService.updateById(user2));
+        if (!userService.updateById(user1)){
+            System.out.println("请刷新页面，重新更新");
+        }else{
+            System.out.println("更新成功");
+        }
+        if (!userService.updateById(user2)){
+            System.out.println("请刷新页面，重新更新");
+        }else{
+            System.out.println("更新成功");
+        }
+
     }
 }
