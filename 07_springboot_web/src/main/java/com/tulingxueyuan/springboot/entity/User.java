@@ -2,6 +2,9 @@ package com.tulingxueyuan.springboot.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
 
+import javax.xml.crypto.Data;
+import java.util.Date;
+
 //mybatisPlus会默认将实体类名当作表名，如果跟数据库不一致使用该注解
 @TableName("sys_user")
 public class User {
@@ -18,6 +21,29 @@ public class User {
     //想实现指定的 原来是多少，逻辑删除以后是多少的话添加参数
 //    @TableLogic(value = "1",delval = "0")
     private Integer enabled;
+
+//    创建时间：希望在添加数据的时候实现填充
+    @TableField(fill = FieldFill.INSERT)
+    private Date createTime;
+//    更新时间：希望在添加、更新数据的时候实现填充
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private Date modifyTime;
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
+    }
 
     public User() {
     }
